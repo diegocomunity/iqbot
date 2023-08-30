@@ -1,0 +1,15 @@
+Existen varias herramientas de código abierto que podrían ser útiles para realizar técnicas de economía o econometría en tu proyecto. Algunas de las más populares y ampliamente utilizadas son:
+
+    Statsmodels: Es una librería de Python que proporciona clases y funciones para la estimación de modelos estadísticos y realiza pruebas estadísticas. Es muy útil para análisis de series temporales y regresión.
+
+    pandas: Esta librería de Python proporciona estructuras de datos y herramientas de análisis de datos que son especialmente útiles para manipular y analizar datos financieros y económicos.
+
+    NumPy: Es una librería de Python que permite trabajar con matrices y funciones matemáticas. Es ampliamente utilizada en análisis financiero y económico.
+
+    R: No es una librería de Python, sino un lenguaje de programación y entorno de desarrollo estadístico que es muy popular en el campo de la econometría y análisis económico. Puedes utilizar R desde Python mediante librerías como rpy2.
+
+    TA-Lib: Esta es una librería específica para análisis técnico de mercados financieros. Proporciona una amplia gama de indicadores técnicos y patrones de velas que pueden ser útiles para tu proyecto.
+
+    Prophet: Es una librería de código abierto desarrollada por Facebook para realizar pronósticos de series temporales. Es especialmente útil para pronosticar tendencias en datos financieros y económicos.
+
+Estas son solo algunas de las herramientas disponibles, y la elección dependerá de tus necesidades específicas y preferencias. Todas estas herramientas son de código abierto, lo que significa que puedes acceder a su código fuente, modificarlas según tus necesidades y utilizarlas de manera gratuita en tu proyecto.

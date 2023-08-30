@@ -1,0 +1,47 @@
+// adapters/inbound/ui.go
+
+package inbound
+
+import (
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/widget"
+)
+
+type UIAdapter struct {
+	app fyne.App
+	win fyne.Window
+}
+
+func NewUIAdapter() *UIAdapter {
+	myApp := app.New()
+	myWin := myApp.NewWindow("YourApp")
+	myWin.Resize(fyne.NewSize(600, 400))
+
+	return &UIAdapter{
+		app: myApp,
+		win: myWin,
+	}
+}
+
+func (ui *UIAdapter) Run() {
+	tabs := widget.NewTabContainer(
+		widget.NewTabItem("Resumen", ui.makeSummaryTabContent()),
+		widget.NewTabItem("Lista de Operaciones", ui.makeListOperationsTabContent()),
+	)
+
+	ui.win.SetContent(tabs)
+	ui.win.ShowAndRun()
+}
+
+func (ui *UIAdapter) makeSummaryTabContent() fyne.CanvasObject {
+	// Implementar aquí la lógica para mostrar el resumen del estado del robot
+	// Usar las interfaces y puertos que ya definiste en la carpeta "ports"
+	return widget.NewLabel("Resumen del estado del robot")
+}
+
+func (ui *UIAdapter) makeListOperationsTabContent() fyne.CanvasObject {
+	// Implementar aquí la lógica para mostrar la lista de operaciones
+	// Usar las interfaces y puertos que ya definiste en la carpeta "ports"
+	return widget.NewLabel("Lista de operaciones")
+}

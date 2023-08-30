@@ -1,0 +1,49 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import talib
+from models.strategy_model import StrategyModel
+
+class DojiStrategy:
+    def __init__(self, data_service):
+        self.data_service = data_service
+        self.doji_df = None
+
+    def execute_strategy(self):
+        df = self.data_service.get_historical_data()
+        df['open'] = df['open'].astype(float)
+        df['max'] = df['max'].astype(float)
+        df['min'] = df['min'].astype(float)
+        df['close'] = df['close'].astype(float)
+
+        # Calcular el patrón Doji
+        df['doji'] = talib.CDLDOJI(df['open'], df['max'], df['min'], df['close'])
+
+        # Filtrar las filas que contienen un Doji
+        doji_df = df[df['doji'] != 0]
+
+        self.doji_df = doji_df
+        # Generar el gráfico
+        plt.figure(figsize=(12, 6))
+        plt.plot(df['timestamp'], df['close'], label='Precio de cierre', color='b')
+        plt.plot(doji_df['timestamp'], doji_df['close'], 'yo', label='Doji')
+        plt.xlabel('Fecha')
+        plt.ylabel('Valor de cierre')
+        plt.title('Estrategia de Doji (Indecisión)')
+        plt.legend()
+        plt.show()
+
+        print("Estrategia ejecutada correctamente")
+
+    def get_strategy_model(self):
+        strategy_name = "Doji Pattern"
+        description = "This strategy detects bullish reversal patterns called 'Hammer'."
+        parameters = {
+            # Aquí puedes agregar los parámetros de la estrategia, si los hay
+        }
+        signal_strength = 0.2  # Aquí puedes calcular o definir la fuerza de la señal
+
+        return StrategyModel(strategy_name, description, parameters, signal_strength)
+
+    
+    def get_data_frame(self):
+        return self.doji_df

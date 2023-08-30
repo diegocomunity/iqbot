@@ -1,0 +1,3 @@
+Para obtener los datos de iq option:
+la autenticación retorna la api y esa api se pasa como parametro
+en el adaptador: IQOptionDataAdapter

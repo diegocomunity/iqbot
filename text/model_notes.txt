@@ -1,0 +1,23 @@
+Calcular la fuerza de la señal como un número en un rango (por ejemplo, entre 0 y 1) es una buena idea, ya que puede proporcionar una medida más cuantitativa de la confianza en la señal generada por la estrategia. A continuación, te propongo una manera de calcular la fuerza de la señal basándonos en ciertos criterios:
+
+    Si el número de patrones Doji detectados en un período de tiempo es mayor, la señal podría considerarse más fuerte, ya que hay una mayor indecisión en el mercado.
+
+    Si el tamaño del cuerpo del Doji en relación con el rango de la vela es pequeño, esto también podría indicar una mayor indecisión y, por lo tanto, una señal más fuerte.
+
+    Si el Doji se forma cerca de niveles de soporte o resistencia clave, esto podría fortalecer la señal.
+
+Podemos asignar valores a cada uno de estos criterios y calcular una puntuación general para la fuerza de la señal. Por ejemplo:
+
+    Si hay 1 Doji detectado en el período de tiempo, asignamos un valor de 0.2.
+    Si hay 2 Dojis detectados, asignamos un valor de 0.4.
+    Si el tamaño del cuerpo del Doji es menor al 25% del rango de la vela, asignamos un valor de 0.3.
+    Si el Doji se forma cerca de un nivel de soporte o resistencia, asignamos un valor de 0.1.
+
+Luego, sumamos los valores asignados a cada criterio y obtenemos una puntuación total en el rango de 0 a 1. Cuanto mayor sea la puntuación, más fuerte será la señal.
+
+Aquí está la implementación del cálculo de la fuerza de la señal en el método get_strategy_model de la clase DojiStrategy:
+
+
+En este ejemplo, estamos calculando la puntuación total de la señal utilizando la media del tamaño del cuerpo del Doji en relación con el rango de la vela (doji_size_ratio), y la media de la proximidad del Doji a niveles de soporte o resistencia (support_resistance_proximity). Estos valores están normalizados en el rango de 0 a 1 para asegurarnos de que la puntuación total esté en ese rango.
+
+Recuerda que estos valores y criterios son solo una sugerencia, y puedes ajustarlos o agregar otros criterios según tus necesidades y análisis específicos.

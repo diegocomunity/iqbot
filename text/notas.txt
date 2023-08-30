@@ -1,0 +1,37 @@
+en la clase CVSDataPort agregarle un metodo puede ser 
+clean_data() para limpiar los datos y estos se puedan 
+obtener como un arreglo
+
+- otro arreglo va hacer en el adaptador:
+mejorar el siguiente código
+#        self.trading_strategy.update_price(price)
+#
+#        signal = self.trading_strategy.generate_signal()
+#        if signal == "BUY":
+            # Lógica para enviar la señal de compra al sistema o realizar otras acciones
+#            print("Señal de compra generada")
+
+        # Puedes devolver la señal generada o realizar otras acciones según sea necesario
+        #return signal
+
+
+en este momento tengo el puerto para obtener el historial de operaciones falso
+y así se implementa:
+
+		ejemplo de implementar el adaptador para obtener los datos ya sean reales o falsos
+		fakeAdapter := adapters.NewFakeHistoryOperationsAdapter()
+
+		var historyPort ports.HistoryOperationsPort = fakeAdapter
+
+		history := historyPort.GetHistoryOperations()
+		// Mostramos los datos en la consola
+		fmt.Println("Historial de operaciones:")
+		for _, operation := range history {
+			fmt.Printf("ID: %s\n", operation.ID)
+			fmt.Printf("Activo: %s\n", operation.Activo)
+			fmt.Printf("Tipo: %s\n", operation.Tipo)
+			fmt.Printf("Precio: %.2f\n", operation.Precio)
+			fmt.Printf("PNL: %.2f\n", operation.PNL)
+			fmt.Printf("Fecha: %s\n", operation.Fecha.Format(time.RFC3339))
+			fmt.Println("-------------------------")
+		}

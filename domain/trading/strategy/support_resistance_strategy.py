@@ -1,0 +1,74 @@
+import pandas as pd
+from scipy.signal import find_peaks
+from models.strategy_model import StrategyModel
+
+class SupportResistanceStrategy:
+    def __init__(self, data_service):
+        self.data_service = data_service
+        self.df = None
+
+    def execute_strategy(self):
+        df = self.data_service.get_historical_data()
+        df['open'] = df['open'].astype(float)
+        df['max'] = df['max'].astype(float)
+        df['min'] = df['min'].astype(float)
+        df['close'] = df['close'].astype(float)
+
+        # Calcular el indicador de Pivots
+        df['pivots'] = self.calculate_pivots(df['close'])
+
+        # Encontrar los puntos de soporte y resistencia
+        support_levels = df[df['pivots'] == -1]  # Pivots negativos son niveles de soporte
+        resistance_levels = df[df['pivots'] == 1]  # Pivots positivos son niveles de resistencia
+
+        self.df = df
+        print("Estrategia ejecutada correctamente")
+
+    def get_strategy_model(self):
+        strategy_name = "Support Resistance"
+        description = ''
+        parameters = {
+            # Aquí puedes agregar los parámetros de la estrategia, si los hay
+        }
+        signal_strength = 0.2  # Aquí puedes calcular o definir la fuerza de la señal
+
+        return StrategyModel(strategy_name, description, parameters, signal_strength)
+
+    def get_data_frame(self):
+        return self.df
+
+    def get_signal(self):
+        df = self.data_service.get_historical_data()
+        df['open'] = df['open'].astype(float)
+        df['max'] = df['max'].astype(float)
+        df['min'] = df['min'].astype(float)
+        df['close'] = df['close'].astype(float)
+
+        # Calcular los niveles de soporte y resistencia
+        support_levels = df[df['pivots'] == -1]
+        resistance_levels = df[df['pivots'] == 1]
+
+        # Obtener el último precio
+        last_price = df['close'].iloc[-1]
+
+        # Determinar si la señal es de compra o venta
+        if last_price >= resistance_levels['close'].max():
+            return "sell"  # Señal de venta si el precio está en o por encima del nivel de resistencia más alto
+        elif last_price <= support_levels['close'].min():
+            return "buy"  # Señal de compra si el precio está en o por debajo del nivel de soporte más bajo
+        else:
+            return ""  # No hay señal si el precio está entre los niveles de soporte y resistencia
+
+    def calculate_pivots(self, prices):
+        # Encontrar los picos y valles
+        peaks, _ = find_peaks(prices, distance=20)
+        valleys, _ = find_peaks(-prices, distance=20)
+        pivots = pd.Series(0, index=prices.index)
+
+        # Asignar valores a los pivots (1 para resistencia, -1 para soporte)
+        for peak in peaks:
+            pivots[peak] = 1
+        for valley in valleys:
+            pivots[valley] = -1
+
+        return pivots
